@@ -52,15 +52,20 @@ body {
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	background: #f5f1e17d;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin: 50px 0
+	margin: 50px 88px 88px 88px;
+	align-items: center;
 }
-section {
-	margin: 50px 0
+
+main {
+	margin: auto;
+	width: 80%;
 }
+
 
 h1{
 	display: flex;
@@ -68,21 +73,29 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 
 h1 > span {
 	font-family: 'Work Sans';
-	font-size:10px;
+	font-size:8px;
 	letter-spacing: 0.1em;
-;
+	margin-top: 8px;
+}
+
+h1 > span {
+	font-family: 'work Sans';
+	font-size: 8px;
+	letter-spacing: 0.1em;
+	margin-top: 8px;
 }
 
 h2{
 	font-family: 'Syne';
 	font-weight: 700;
 	font-size: 30px;
-	color: #1D6154
+	color: #1D6154;
+	margin-bottom: 50px;
 }
 nav ul {
 	display: flex;
@@ -90,56 +103,95 @@ nav ul {
 	list-style-type: none;
 
 }
-nav li {
-	padding: 0 10px;
-	font-size: 1.2em;
+	nav li img {
+		width: 20px;
+		filter: drop-shadow((0 0 black));
+	}
+	nav li {
+		padding: 0 20px;
+		font-size: 1.2em;
+	}
+
+	a :hover {
+		color: #B1663C;
+	}
+	nav a {
+		text-decoration: none;
+		color: black;
+	}
+
+section {
+	margin: 70px;
 }
 
-li:hover {
-	color: #B1663C;
-}
-#introduction {
-	display: flex;
-	align-items: center;
-}
-#introduction figure {
-	flex: 1
-}
-#introduction img {
-	display: block;
-	margin: auto;
-	width: 80%;
-}
+	#introduction {
+		display: flex;
+		align-items: center;
+	}
+	#introduction figure {
+		flex: 1
+	}
+	#introduction img {
+		display: block;
+		width: 90%;
+	}
 
-#introduction article {
-	flex: 1
-}
-#introduction h2 {
-	margin-bottom: 1em;
-}
+	#introduction article {
+		flex: 1
+	}
+	#introduction h2 {
+		margin-bottom: 0.8em;
+		font-size: 22px;
+	}
 
-#introduction p {
-	margin-bottom: 0.5em;
-}
-#portfolio h2 {
+	#introduction p {
+		margin-bottom: 1em;
+		color : #3D3D3D;
+		font-size: 12px;
+	}
+	#portfolio h2 {
+		text-align: center;
+		margin-bottom: 1em;
+	}
+	#portfolio button {
+		border-radius : 60px;
+	color : #1D6154;
+	border : solid 1px #1D6154;
+	background-color:transparent;
+	padding: 5px 15px;
+	margin: 5px;
+	width: max-content;
 	text-align: center;
-	margin-bottom: 1em;
-}
+	font-size: 15px;
+	}
+	.filters {
+		display: flex;
+		justify-content: center;
+		margin: 10px;
+	}
+	#porrtfolio button:hover {
+		background: #1D6154;
+	}
+
 .gallery {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 15px;
 }
 
 .gallery img {
 	width: 100%;
-
+}
+figcaption {
+	color: #3D3D3D;
+	margin-top: 5px;
+	font-size: 13px;
 }
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;

@@ -1,13 +1,25 @@
 // Fonction qui permet d'initialiser le programme
 function init() {
+    //Vérifie si l'utilisateur est connecté
+    const isConnected = testConnexion();
     //Récupère et affiche les catégories
     getCategories();
 
     //Récupère et affiche les travaux 
     getWorks();
-}
 
+    //Je récupère le token ici avec localStorage
+
+}
 init();
+//Fonction qui vérifie si l'utilisateur est connecté
+function testConnexion(){
+  if(localStorage.getItem("token") == ""|| localStorage.getItem("token") == undefined){
+    return false
+  } else {
+    return true
+  }
+}
 // Fonction qui fait appel à l'API sur les catégories et les affiche sur le DOM
 async function getCategories() {
     // appel à l'API avec fetch
@@ -16,7 +28,9 @@ async function getCategories() {
     const datas = await req.json();
 
 for (let i = 0; i < datas.length; i++) {
-    const button = `<button data-categoryid="${datas[i].id}">${datas[i].id}">${datas[i].name}</button>`;
+    const button = `<button data-categoryid="${datas[i].id}">
+                      ${datas[i].name}
+                    </button>`;
 
     // j'ajoute le bouton sur le DOM
     document.querySelector(".filters").insertAdjacentHTML("beforeend", button)
@@ -41,18 +55,18 @@ function filterWork(categoryId) {
 // Au lancement de cette fonction, tu sélectionnes toutes tes figures et tu display none
    const figures = document.querySelectorAll(".gallery figure");
    figures.forEach((figure) => {
-    if (categoryId == 0) {
-    figure.style.display = "block";
-    } else {
-   figure.style.display = "none";
-    }
+      if (categoryId == 0) {
+      figure.style.display = "block";
+      } else {
+      figure.style.display = "none";
+      }
     });
    // Ensuite tu sélectionnes toutes les figures avec data-categoryid="la catégorie transmise"
     const figuresToShow = document.querySelectorAll(
     `figure[data-categoryid="${categoryId}"]`
     );
-    figuresToShow.forEach((figure) => {
-    figure.style.display = "block";
+      figuresToShow.forEach((figure) => {
+      figure.style.display = "block";
     });
 }
     
