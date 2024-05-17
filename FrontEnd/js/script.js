@@ -23,14 +23,26 @@ function init() {
       //je renvoie à la page login
       window.location.href = "login.html";
     });
-    
+   
     // je masque les filtres
     const hideFilters = document.querySelector(".filters");
     hideFilters.style.display = "none";
 
     //j'ajoute les éléments sur la page de connexion (bouton modifier + bannière mode édition)
+      // icone + bouton modifier
+      // Je crée une balise
+      const btnChange = document.createElement("div")
+      btnChange.innerHTML = `<button>
+      <i class="fa-regular fa-pen-to-square"></i>
+      modifier
+      </button>`
+      //J'insère la balise dans la page : 
+      //en récupérant l'élément parent existant
+      const mesProjets = document.querySelector("#portfolio>h2")
+      //J'ajoute le nouvel élément au parent
+      mesProjets.appendChild(btnChange)
 
-    // icone + bouton modifier
+
 
   }
 

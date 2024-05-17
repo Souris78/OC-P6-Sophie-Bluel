@@ -238,3 +238,23 @@ footer nav ul {
 	margin: 2em
 }
 
+/* button modifier mes Projets*/
+#portfolio>h2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#portfolio button {
+	color: black;
+	border: none;
+	font-size: 8px;
+	padding: 10px;
+	cursor: pointer;
+	padding: 10px;
+}
+
+#portfolio i {
+	padding: 5px;
+}
+
