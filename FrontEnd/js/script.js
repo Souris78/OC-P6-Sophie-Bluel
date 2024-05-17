@@ -8,10 +8,38 @@ function init() {
     //Récupère et affiche les travaux 
     getWorks();
 
-    //Je récupère le token ici avec localStorage
+  // Je remplace le mot Login par Logout, si connexion réussie
+  if(isConnected) {
+    document.querySelector(".login").innerText = "logout";
+
+    // AEL sur logout
+    const logout = document.querySelector(".login");
+    logout.addEventListener("click" , (e) => {
+      e.preventDefault();
+
+      // je déconnecte en supprimant le token
+      localStorage.removeItem("token");
+
+      //je renvoie à la page login
+      window.location.href = "login.html";
+    });
+    
+    // je masque les filtres
+    const hideFilters = document.querySelector(".filters");
+    hideFilters.style.display = "none";
+
+    //j'ajoute les éléments sur la page de connexion (bouton modifier + bannière mode édition)
+
+    // icone + bouton modifier
+
+  }
 
 }
+
+
+
 init();
+
 //Fonction qui vérifie si l'utilisateur est connecté
 function testConnexion(){
   if(localStorage.getItem("token") == ""|| localStorage.getItem("token") == undefined){
@@ -20,6 +48,10 @@ function testConnexion(){
     return true
   }
 }
+
+
+
+
 // Fonction qui fait appel à l'API sur les catégories et les affiche sur le DOM
 async function getCategories() {
     // appel à l'API avec fetch
