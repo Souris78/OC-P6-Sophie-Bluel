@@ -1,54 +1,57 @@
 // Fonction qui permet d'initialiser le programme
 function init() {
-    //Vérifie si l'utilisateur est connecté
-    const isConnected = testConnexion();
-    //Récupère et affiche les catégories
-    getCategories();
-
-    //Récupère et affiche les travaux 
-    getWorks();
+  //Vérifie si l'utilisateur est connecté
+  const isConnected = testConnexion();
+  //Récupère et affiche les catégories
+  getCategories();
+  //Récupère et affiche les travaux 
+  getWorks();
 
   // Je remplace le mot Login par Logout, si connexion réussie
   if(isConnected) {
-    document.querySelector(".login").innerText = "logout";
 
+    document.querySelector(".login").innerText = "logout"
     // AEL sur logout
-    const logout = document.querySelector(".login");
-    logout.addEventListener("click" , (e) => {
-      e.preventDefault();
-
-      // je déconnecte en supprimant le token
-      localStorage.removeItem("token");
-
-      //je renvoie à la page login
-      window.location.href = "login.html";
-    });
+    const logout = document.querySelector(".login")
+      
+      logout.addEventListener("click" , (e) => {
+          e.preventDefault()
+          // je déconnecte en supprimant le token
+          localStorage.removeItem("token")
+          //je renvoie à la page login
+          window.location.href = "login.html"
+      });
    
     // je masque les filtres
-    const hideFilters = document.querySelector(".filters");
-    hideFilters.style.display = "none";
+    const hideFilters = document.querySelector(".filters")
+      hideFilters.style.display = "none"
 
     //j'ajoute les éléments sur la page de connexion (bouton modifier + bannière mode édition)
-      // icone + bouton modifier
+      // 1. Icone + bouton modifier
       // Je crée une balise
-      const btnChange = document.createElement("div")
+    const btnChange = document.createElement("div")
       btnChange.innerHTML = `<button>
-      <i class="fa-regular fa-pen-to-square"></i>
-      modifier
-      </button>`
+        <i class="fa-regular fa-pen-to-square"></i>
+        modifier
+        </button>`
       //J'insère la balise dans la page : 
-      //en récupérant l'élément parent existant
+
+      // - en récupérant l'élément parent existant
       const mesProjets = document.querySelector("#portfolio>h2")
-      //J'ajoute le nouvel élément au parent
-      mesProjets.appendChild(btnChange)
+        // - en ajoutant le nouvel élément au parent
+        mesProjets.appendChild(btnChange)
 
-
-
+      // 2. Bannière mode édition
+      //je crée d'abord le bandeau
+      const banner = `<div id="banner">
+        <i class="fa-regular fa-pen-to-square"></i>
+        Mode édition
+        </div>`
+        //et j'ajoute sur le DOM
+        document.querySelector("body").insertAdjacentHTML("beforebegin", banner)
   }
 
 }
-
-
 
 init();
 
@@ -60,9 +63,6 @@ function testConnexion(){
     return true
   }
 }
-
-
-
 
 // Fonction qui fait appel à l'API sur les catégories et les affiche sur le DOM
 async function getCategories() {
