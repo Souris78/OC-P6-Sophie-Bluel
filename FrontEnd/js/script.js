@@ -27,28 +27,55 @@ function init() {
       hideFilters.style.display = "none"
 
     //j'ajoute les éléments sur la page de connexion (bouton modifier + bannière mode édition)
-      // 1. Icone + bouton modifier
-      // Je crée une balise
-    const btnChange = document.createElement("div")
-      btnChange.innerHTML = `<button>
-        <i class="fa-regular fa-pen-to-square"></i>
-        modifier
-        </button>`
-      //J'insère la balise dans la page : 
+      
+    // 1. Icone + bouton modifier
+    const btnChange = document.createElement("a");
+    btnChange.innerHTML = `
+              <i class="fa-regular fa-pen-to-square"></i>
+              <p>modifier</p>`;
+       
+      //J'insère la balise dans la page :
 
-      // - en récupérant l'élément parent existant
-      const mesProjets = document.querySelector("#portfolio>h2")
-        // - en ajoutant le nouvel élément au parent
-        mesProjets.appendChild(btnChange)
+        // - en récupérant l'élément parent existant
+        const mesProjets = document.querySelector("#portfolio>h2")
+          // - en ajoutant le nouvel élément au parent
+          mesProjets.appendChild(btnChange)
 
-      // 2. Bannière mode édition
-      //je crée d'abord le bandeau
-      const banner = `<div id="banner">
-        <i class="fa-regular fa-pen-to-square"></i>
-        Mode édition
-        </div>`
-        //et j'ajoute sur le DOM
-        document.querySelector("body").insertAdjacentHTML("beforebegin", banner)
+        // 2. Bannière mode édition
+        //je crée d'abord le bandeau
+        const banner = `<button id="banner">
+          <i class="fa-regular fa-pen-to-square"></i>
+          Mode édition
+          </button>`
+          //et je l'ajoute sur le DOM
+          document.querySelector("body").insertAdjacentHTML("beforebegin", banner)
+
+    // la modale
+
+      //Fonction pour ouvrir/fermer la modale
+      const dialog = document.querySelector("dialog");
+      const showLink = document.querySelector("h2 a");
+      const closeLink = document.querySelector(".close-button");
+  
+      //Ouvre la modale
+      showLink.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+  
+      //ferme la modale quand on appuie sur la croix
+      closeLink.addEventListener("click", (e) => {
+        dialog.close();
+      });
+  
+      // Ferme la modale quand on clique à l'extérieur
+  
+      window.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (e.target === dialog) dialog.close();
+      });
+  
+      
   }
 
 }
@@ -120,16 +147,45 @@ async function getWorks() {
     // Récupère et formatte dans un format qui peut être manipulé par JS
     const dataWorks = await reqWorks.json();
     
-    for (let i = 0; i < dataWorks.length; i++) {
-        const figure = `<figure data-id="${dataWorks[i].id}" 
-        data-categoryid="${dataWorks[i].categoryId}">
-        <img src="${dataWorks[i].imageUrl}" alt= "${dataWorks[i].title}">
-        <figcaption>${dataWorks[i].title}</figcaption>
-        </figure>`;
-    
-        // J'ajoute les figures sur le DOM
-        document.querySelector(".gallery").insertAdjacentHTML("beforeend", figure);
-    }
+      for (let i = 0; i < dataWorks.length; i++) {
+          const figure = `<figure data-id="${dataWorks[i].id}" 
+          data-categoryid="${dataWorks[i].categoryId}">
+          <img src="${dataWorks[i].imageUrl}" alt= "${dataWorks[i].title}">
+          <figcaption>${dataWorks[i].title}</figcaption>
+          </figure>`;
+      
+          // J'ajoute les figures sur le DOM
+          document.querySelector(".gallery").insertAdjacentHTML("beforeend", figure);
+      }
+
+    //j'ajoute les figures dans la modale
+      for (let i = 0; i < dataWorks.length; i++) {
+        const modalFigure = `<figure 
+          data-id="${dataWorks[i].id}" 
+          >
+          <img src="${dataWorks[i].imageUrl}" alt= "${dataWorks[i].title}">
+          <span>
+          <i class="fa-solid fa-trash-can"
+          data-id="${dataWorks[i].id}" 
+          ></i></span>
+          </figure>`;
+
+        document
+          .querySelector(".modal-gallery")
+          .insertAdjacentHTML("beforeend", modalFigure);
+      }
+
+      const trashes = document.querySelectorAll('.fa-trash-can')
+      trashes.forEach((trash) => {
+        trash.addEventListener("click" , (e) => {
+          const id = e.target.dataset.id
+        const figures = document.querySelectorAll(`[data-id= "${id}"]`)
+          console.log(figures)
+          figures.forEach((figure) => {
+            figure.remove()
+          })
+        })
+      })
 }
     
 

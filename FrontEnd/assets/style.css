@@ -248,7 +248,8 @@ footer nav ul {
 	color: white;
 	text-align: center;
 	font-size: 12px;
-	padding : 20px;
+	padding : 15px;
+	cursor: pointer;
 }
 #banner i {
 	padding-right : 10px;
@@ -259,18 +260,94 @@ footer nav ul {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	font-size: 22px;
 }
+	h2 a {
+		color: black;
+		font-size: 10px;
+		padding: 10px;
+		cursor: pointer;
+		margin: 10px;
+		display: flex;
+    	align-items: baseline;
+		
+	}
+		h2 i {
+			font-size: 12px;
+			padding: 5px;
+		}
 
-#portfolio button {
-	color: black;
+/* Modale */
+dialog {
+	position: fixed;
+	width: 50%;
+	height: max-content;
+	background: white;
+	border-radius: 10px;
+	overflow : auto;
 	border: none;
-	font-size: 8px;
-	padding: 10px;
-	cursor: pointer;
-	padding: 10px;
+	outline: none;
+	padding: 0;	
 }
+	::backdrop {
+		background: rgba(0, 0, 0, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border: none;
+	}
+	.close-button {
+		color: black;
+		position: absolute;
+		right: 20px;
+		top: 20px;
+	}
+	
+	.modal-title {
+		color: black;
+		text-align: center;
+		font-size: 16px;
+		font-family: 'Work Sans';
+		margin-top: 20px;
+	}
 
-#portfolio i {
-	padding: 5px;
-}
+	.modal-gallery {
+		width: auto;
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+		grid-column-gap: 5px;
+		grid-row-gap: 5px;
+		margin : 40px;	
+	}
+		.modal-gallery img {
+			width: 100%;
+		}
+		section figure {
+			position: relative;
+		}
+			.fa-trash-alt:before, .fa-trash-can:before {
+				content: "\f2ed";
+				position: absolute;
+				background: black;
+				padding: 2px;
+				color: white;
+				border-radius: 20%;
+				right: 2px;
+				top: 4px;
+				font-size: 6px;
+			}
+		
+	hr {
+		margin: 20px 50px;	
+	}	
 
+	.link-add-pics {
+		display: flex;
+		justify-content: center;
+		max-width: 40%;
+		color: white;
+		background-color: #1D6154;
+		border-radius: 60px;
+		padding: 8px;
+		margin: 10px auto;	
+	}
