@@ -37,8 +37,9 @@
 	</section>
 	<section id="portfolio">
 		<h2>Mes Projets</h2>
-		
-		<dialog>
+	
+		<!-- Modale galerie photo -->
+		<dialog class="dialog-one">
 			<div class="stop">
 			  <a class="close-button">
 				<i class="fa-solid fa-xmark"></i>
@@ -49,6 +50,50 @@
 			  <a class="link-add-pics">Ajouter une photo</a>
 			</div>
 		  </dialog>
+
+		  <!-- Modale ajout photo -->
+		  <dialog class="add-project">
+			<div class="add-project-stop">
+				<a class="add-project-arrow-button">
+					<i class="fa-solid fa-arrow-left"></i>
+			  	</a>  
+				<a class="add-project-close-button">
+					<i class="fa-solid fa-xmark"></i>
+			  	</a>
+			  <h1 class="add-project-modal-title">Ajout photo</h1>
+
+			  <form method="post" action="#" enctype="multipart/form-data">
+				
+				<div class="add-pic-box">
+
+					<label for="icone">
+						<i class="fa-regular fa-image"></i>
+					</label>
+
+					<label for="file">+ Ajouter photo</label>
+					<input type="file" id="file" name="image">
+					<img src = "#" alt= "image preview">
+					<span>jpg, png : 4mo max</span>
+
+				</div>
+
+				<label for="title" class="labels">Titre</label>
+				<input type="text"  id="title" name="title">
+
+				<label for="category" class="labels">Catégorie</label>
+				<div class="chevron">
+					<select id="category" name="category""> 
+					
+					</select>
+				</div>
+
+				<hr />
+
+				<input type="submit" value="Valider" id="valider">
+
+			  </form>
+			</div>
+		  </dialog>
 		  
 		<div class="filters">
 			<button data-categoryid="0">Tous</button>
@@ -56,6 +101,8 @@
 		<div class="gallery">	
 		</div>
 	</section>
+
+	<!-- Formulaire -->
 	<section id="contact">
 		<h2>Contact</h2>
 		<p>Vous avez un projet ? Discutons-en !</p>

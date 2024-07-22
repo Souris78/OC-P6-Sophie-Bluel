@@ -278,7 +278,8 @@ footer nav ul {
 		}
 
 /* Modale */
-dialog {
+dialog,
+.add-project{
 	position: fixed;
 	width: 50%;
 	height: max-content;
@@ -296,19 +297,23 @@ dialog {
 		justify-content: center;
 		border: none;
 	}
-	.close-button {
+	.close-button,
+	.add-project-close-button {
 		color: black;
 		position: absolute;
 		right: 20px;
 		top: 20px;
 	}
 	
-	.modal-title {
+	.modal-title, 
+	.add-project-modal-title {
+		font-weight: normal;
 		color: black;
 		text-align: center;
-		font-size: 16px;
+		font-size: 20px;
 		font-family: 'Work Sans';
-		margin-top: 20px;
+		margin: 40px;
+		
 	}
 
 	.modal-gallery {
@@ -317,7 +322,7 @@ dialog {
 		grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 		grid-column-gap: 5px;
 		grid-row-gap: 5px;
-		margin : 40px;	
+		margin : 50px;	
 	}
 		.modal-gallery img {
 			width: 100%;
@@ -338,7 +343,9 @@ dialog {
 			}
 		
 	hr {
-		margin: 20px 50px;	
+		margin: 20px 50px;
+		border: 0;
+    	border-top: 1px solid #c8c3c3fa;
 	}	
 
 	.link-add-pics {
@@ -349,5 +356,107 @@ dialog {
 		background-color: #1D6154;
 		border-radius: 60px;
 		padding: 8px;
-		margin: 10px auto;	
+		margin: 30px auto;	
 	}
+
+/* Modale ajout photo */
+
+
+.add-project-arrow-button {
+	color: black;
+	position: absolute;
+	left: 20px;
+	top: 20px;
+}
+
+dialog form {
+		display: flex;
+		flex-direction: column;
+		margin: 20px auto;
+    	width: 70%;
+		gap: 10px;
+}
+
+	.add-pic-box {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		background: #E8F1F6;
+		padding: 20px;
+		gap: 8px;
+	}
+		.fa-image:before {
+			color: #0000003b;
+			font-size: 70px;
+		}
+		.add-pic-box label[for="file"] {
+			background: #00000024;
+			color: #0504e89c;
+			padding: 10px;
+			font-size: 12px;
+			font-family: 'Work Sans';
+			width: 50%;
+			margin: 0 auto;
+			border-radius: 50px;
+			text-align: center;
+		}
+		dialog input[type="submit"] {
+			border: none;
+			background: #00000024;
+			color: #0504e89c;
+			padding: 10px;
+			font-size: 12px;
+			font-family: 'Work Sans';
+			width: 50%;
+			margin: 0 auto;
+		}
+			
+		.labels {
+			font-size: 11px;
+		}
+
+	#title,
+	select {
+		height: 35px;
+		font-size: 1.2em;
+		border: none;
+		box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	}
+
+		.chevron {
+			appearance: none;
+			-webkit-appearance: none;
+				-moz-appearance: none;
+			position: relative;
+			display: inline-block;
+		}		
+		.chevron select {
+			width: 100%;
+		appearance: none;
+		}
+		
+		.chevron::after{
+			content: '\f078';
+			position: absolute;
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
+			color: grey;
+			top: 35%;
+			right: 20px;
+			pointer-events: none;
+			font-size: 10px;
+		
+		}
+
+	form hr {
+	width: 100%;
+	margin: 20px auto;
+
+	}
+
+	#valider {
+		width : 60%;
+		color : white;
+		background-color : rgba(145, 142, 142, 0.709);
+	}
+		

@@ -74,10 +74,7 @@ function init() {
         e.preventDefault();
         if (e.target === dialog) dialog.close();
       });
-  
-      
   }
-
 }
 
 init();
@@ -174,18 +171,92 @@ async function getWorks() {
           .querySelector(".modal-gallery")
           .insertAdjacentHTML("beforeend", modalFigure);
       }
-
+      //Je supprime les photos quand clique sur corbeille dans la modale et sur la page d'accueil
       const trashes = document.querySelectorAll('.fa-trash-can')
       trashes.forEach((trash) => {
         trash.addEventListener("click" , (e) => {
           const id = e.target.dataset.id
         const figures = document.querySelectorAll(`[data-id= "${id}"]`)
+        
           console.log(figures)
           figures.forEach((figure) => {
             figure.remove()
+            
           })
         })
       })
-}
+      
+      //Je supprime les photos du back
+      const deleteButtons = document.querySelectorAll('.fa-trash-can')
+        deleteButtons.forEach((deleteButton) => {
+          deleteButton.addEventListener("click" , async (e) => {
+         
+            const id = e.target.dataset.id
+          const figures = document.querySelectorAll(`[data-id= "${id}"]`)
+            
+          try {
+            const deleteWorks = await fetch(`http://localhost:5678/api/works/${id}`, {
+                  method:"DELETE",
+                  headers: {
+                    "Content-Type": "application/json",
+                     "authorization": `Bearer ${localStorage.getItem('token')}`
+                  }
+            })
+            if(!deleteWorks.ok) {
+              throw new Error ("Erreur lors de la suppression des travaux")
+            }
+
+              figures.forEach((figure) => {
+              figure.remove()
+              })
+
+          }catch (error) {
+            console.error("Erreur lors de la suppression :" , error)
+          }
+
+        })
+
+        })
+      }
+
+// Fonction pour ouvrir/fermer la modale
+      const dialog = document.querySelector(".add-project");
+      const showLinkTwo = document.querySelector(".link-add-pics");
+      const closeLinkTwo = document.querySelector(".add-project-close-button");
+  
+      //Ouvre la modale
+      showLinkTwo.addEventListener("click", (e) => {
+        e.preventDefault();
+        dialog.showModal();
+      });
+  
+      //ferme la modale quand on appuie sur la croix
+      closeLinkTwo.addEventListener("click", (e) => {
+        dialog.close();
+      });
+  
+      // Ferme la modale quand on clique à l'extérieur
+  
+      window.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (e.target === dialog) dialog.close();
+      });
+
+// const addPicBtn = document.getElementById("file")
+// console.log (addPicBtn)
+// const image = document.getElementById("image")
     
+// addPicBtn.addEventListener('change' , () => {
+//   const fileReader = new FileReader()
+ 
+  // fileReader.readAsDataURL(addPicBtn)
+  // console.log(fileReader)
+
+  // fileReader.addEventListener('load' , () => {
+  //   const url = fr.result
+  //   console.log(url)
+  // })
+// })
+
+  
 
