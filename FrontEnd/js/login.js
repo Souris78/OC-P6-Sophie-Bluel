@@ -4,7 +4,6 @@ const button = document.getElementById("button")
 button.addEventListener("click", async (event) => {
     event.preventDefault();
 
-
     // une fois cliqué je lance une fonction qui va faire la connexion
     //je récupère l'email
     //le mot de passe

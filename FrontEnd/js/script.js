@@ -71,7 +71,6 @@ function init() {
       // Ferme la modale quand on clique à l'extérieur
   
       window.addEventListener("click", (e) => {
-        e.preventDefault();
         if (e.target === dialog) dialog.close();
       });
   }
@@ -95,27 +94,27 @@ async function getCategories() {
     // récupère et formatte dans un format qui peut être manipulé par JS
     const datas = await req.json();
 
-for (let i = 0; i < datas.length; i++) {
-    const button = `<button data-categoryid="${datas[i].id}">
-                      ${datas[i].name}
-                    </button>`;
+      for (let i = 0; i < datas.length; i++) {
+          const button = `<button data-categoryid="${datas[i].id}">
+                            ${datas[i].name}
+                          </button>`;
 
-    // j'ajoute le bouton sur le DOM
-    document.querySelector(".filters").insertAdjacentHTML("beforeend", button)
-    }
+          // j'ajoute le bouton sur le DOM
+          document.querySelector(".filters").insertAdjacentHTML("beforeend", button)
+      }
 
-    // Sur chaque bouton, ajout d'un écouteur d'évènement (click)
-    const buttons = document.querySelectorAll(".filters button");
-    buttons.forEach((button) => {
-      // A chaque bouton, ajoute l'écouteur d'évènement
-      button.addEventListener("click", (e) => {
-        const categoryId = e.target.dataset.categoryid;
-  
-        // Filtrer les travaux dans la catégorie cliquée
-        filterWork(categoryId);
-      });
-    });
-  }
+          // Sur chaque bouton, ajout d'un écouteur d'évènement (click)
+          const buttons = document.querySelectorAll(".filters button");
+          buttons.forEach((button) => {
+            // A chaque bouton, ajoute l'écouteur d'évènement
+            button.addEventListener("click", (e) => {
+              const categoryId = e.target.dataset.categoryid;
+        
+              // Filtrer les travaux dans la catégorie cliquée
+              filterWork(categoryId);
+            });
+        });
+}
 
 // Fonction qui filtre les travaux en fonction de l'id de la catégorie
 function filterWork(categoryId) {
@@ -155,7 +154,7 @@ async function getWorks() {
           document.querySelector(".gallery").insertAdjacentHTML("beforeend", figure);
       }
 
-    //j'ajoute les figures dans la modale
+     //j'ajoute les figures dans la modale
       for (let i = 0; i < dataWorks.length; i++) {
         const modalFigure = `<figure 
           data-id="${dataWorks[i].id}" 
@@ -221,42 +220,153 @@ async function getWorks() {
 
 // Fonction pour ouvrir/fermer la modale
       const dialog = document.querySelector(".add-project");
+      const dialogOne = document.querySelector('.dialog-one')
       const showLinkTwo = document.querySelector(".link-add-pics");
       const closeLinkTwo = document.querySelector(".add-project-close-button");
-  
+      const closeLinkArrow = document.querySelector(".fa-arrow-left");
+    
       //Ouvre la modale
       showLinkTwo.addEventListener("click", (e) => {
         e.preventDefault();
-        dialog.showModal();
+          dialog.showModal();
+          dialogOne.close()
       });
   
-      //ferme la modale quand on appuie sur la croix
-      closeLinkTwo.addEventListener("click", (e) => {
-        dialog.close();
-      });
-  
-      // Ferme la modale quand on clique à l'extérieur
-  
-      window.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (e.target === dialog) dialog.close();
-      });
-
-// const addPicBtn = document.getElementById("file")
-// console.log (addPicBtn)
-// const image = document.getElementById("image")
+        //ferme la modale quand on appuie sur la croix
+        closeLinkTwo.addEventListener("click", (e) => {
+          dialog.close();
+        });
     
-// addPicBtn.addEventListener('change' , () => {
-//   const fileReader = new FileReader()
- 
-  // fileReader.readAsDataURL(addPicBtn)
-  // console.log(fileReader)
+          // Ferme la modale quand on clique à l'extérieur et sur la flèche
+      
+          window.addEventListener("click", (e) => {
+            if (e.target === dialog || e.target === closeLinkArrow) dialog.close()
+          }); 
 
-  // fileReader.addEventListener('load' , () => {
-  //   const url = fr.result
-  //   console.log(url)
-  // })
-// })
+          //affichage image
+          const labelFile = document.querySelector(".add-pic-box label[for='file']")
+          const inputFile = document.getElementById("file")
+          const previewImage = document.querySelector(".add-pic-box img")
+          const iconeFile = document.querySelector(".add-pic-box i")
+          const textFile = document.querySelector(".add-pic-box span")
+            
+          inputFile.addEventListener('change' , () => {
+              const file = inputFile.files[0] //récup ce qu'il y'a dans le fichier
+              
+                if (file) {
+                  const fileReader = new FileReader()
+                  fileReader.readAsDataURL(file)
+                    fileReader.addEventListener('load' , () => {
+                        const url = fileReader.result
+                        previewImage.src = url
+                        previewImage.style.display = "block"
+                        previewImage.style.width = "35%"
+                        previewImage.style.height = "100%"
+                        iconeFile.style.display = "none"
+                        labelFile.style.display = "none"
+                        textFile.style.display = "none"
+                    })
+                }
+          })
+          
+          // récuperation liste catégories
+          async function getModalCategories() {
+            // appel à l'API avec fetch
+            const req = await fetch("http://localhost:5678/api/categories");
+            // récupère et formatte dans un format qui peut être manipulé par JS
+            return await req.json();
+          }
+
+          async function showSelectedCategory() {
+            
+            const selectCategory = document.querySelector("select#category")
+            const categories = await getModalCategories()
+            
+              categories.forEach(category => {
+                const option = document.createElement("option")
+                option.value = category.id
+                option.textContent = category.name
+                selectCategory.appendChild(option)
+              })
+          }
+            showSelectedCategory()
+            
+            // POST formulaire
+            const form = document.querySelector("form")
+            const title = document.getElementById("title")
+            const category = document.getElementById("category")
+            const submit = document.getElementById("valider")
+           
+            
+           
+            form.addEventListener("submit" , async (e) => {
+              // Lors de l'envoi du formulaire, j'empêche l'envoi normal 
+              e.preventDefault()
+              // Je construis un objet FormData qui déclenche l'événement formdata
+              const formData = new FormData(form)
+
+              try {
+                  const submitForm = await fetch("http://localhost:5678/api/works", {
+                      method:"POST",
+                      body: formData,
+                      headers: {
+                              "authorization": `Bearer ${localStorage.getItem('token')}`
+                      }
+                  })
+                
+                  if(!submitForm.ok) {
+                      throw new Error ("Erreur lors de l'ajout des travaux")
+                  }
+
+                  const dataModal = await submitForm.json()
+                  console.log("projet ajouté" , dataModal)
+                  form.reset()
+                  showSelectedCategory()
+                  getWorks()
+
+                  }catch (error) {
+                      console.error("Erreur lors de l'ajout des travaux :" , error)
+                    
+                    let errorMessage = document.getElementById("error-message");
+                    if (!errorMessage) {
+                      errorMessage = document.createElement('p');
+                      errorMessage.id = "error-message";
+                      errorMessage.style.color = 'red';
+                      form.appendChild(errorMessage);
+                    }
+                    errorMessage.textContent = "Une erreur est survenue lors de l'ajout des travaux. Veuillez réessayer.";
+                  }
+            })
+            // fonction pour vérifier que les champs sont remplis
+            function checkForm() {
+              const submit = document.getElementById("valider") 
+              form.addEventListener("input" , () => {
+                if (title.value !=="" && category.value !=="" && inputFile.value !=="") {
+                  
+                  submit.disabled = false
+                  submit.classList.remove("not-valid")
+                  
+                  } else {
+                          submit.classList.add("not-valid")
+                          submit.disabled = true
+                    }
+              })
+
+            }
+           
+            checkForm()
+            
+          
+
+        
+
+         
+
+
+
+
+          
+
 
   
 

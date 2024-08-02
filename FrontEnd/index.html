@@ -63,18 +63,13 @@
 			  <h1 class="add-project-modal-title">Ajout photo</h1>
 
 			  <form method="post" action="#" enctype="multipart/form-data">
-				
+
 				<div class="add-pic-box">
-
-					<label for="icone">
-						<i class="fa-regular fa-image"></i>
-					</label>
-
+					<i class="fa-regular fa-image"></i>
 					<label for="file">+ Ajouter photo</label>
 					<input type="file" id="file" name="image">
 					<img src = "#" alt= "image preview">
-					<span>jpg, png : 4mo max</span>
-
+					<span for="text">jpg, png : 4mo max</span>
 				</div>
 
 				<label for="title" class="labels">Titre</label>
@@ -82,14 +77,13 @@
 
 				<label for="category" class="labels">Catégorie</label>
 				<div class="chevron">
-					<select id="category" name="category""> 
-					
+					<select id="category" name="category"> 
 					</select>
 				</div>
 
 				<hr />
 
-				<input type="submit" value="Valider" id="valider">
+				<input type="submit" value="Valider" id="valider" class="not-valid" disabled>
 
 			  </form>
 			</div>

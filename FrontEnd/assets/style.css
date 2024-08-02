@@ -349,6 +349,7 @@ dialog,
 	}	
 
 	.link-add-pics {
+		cursor: pointer;
 		display: flex;
 		justify-content: center;
 		max-width: 40%;
@@ -382,7 +383,7 @@ dialog form {
 		flex-direction: column;
 		align-items: center;
 		background: #E8F1F6;
-		padding: 20px;
+		/* padding: 20px; */
 		gap: 8px;
 	}
 		.fa-image:before {
@@ -390,6 +391,7 @@ dialog form {
 			font-size: 70px;
 		}
 		.add-pic-box label[for="file"] {
+			cursor : pointer;
 			background: #00000024;
 			color: #0504e89c;
 			padding: 10px;
@@ -400,20 +402,26 @@ dialog form {
 			border-radius: 50px;
 			text-align: center;
 		}
-		dialog input[type="submit"] {
-			border: none;
-			background: #00000024;
-			color: #0504e89c;
-			padding: 10px;
-			font-size: 12px;
-			font-family: 'Work Sans';
-			width: 50%;
-			margin: 0 auto;
-		}
+			.add-pic-box input[type="file"],
+			.add-pic-box  img {
+				display: none;
+			}
+		
+			dialog input[type="submit"] {
+				border: none;
+				background: #00000024;
+				color: #0504e89c;
+				padding: 10px;
+				font-size: 12px;
+				font-family: 'Work Sans';
+				width: 50%;
+				margin: 0 auto;
+			}
 			
-		.labels {
-			font-size: 11px;
-		}
+			.labels,
+			.add-pic-box span {
+				font-size: 11px;
+			}
 
 	#title,
 	select {
@@ -426,15 +434,15 @@ dialog form {
 		.chevron {
 			appearance: none;
 			-webkit-appearance: none;
-				-moz-appearance: none;
+			-moz-appearance: none;
 			position: relative;
 			display: inline-block;
 		}		
+		
 		.chevron select {
 			width: 100%;
 		appearance: none;
 		}
-		
 		.chevron::after{
 			content: '\f078';
 			position: absolute;
@@ -445,18 +453,21 @@ dialog form {
 			right: 20px;
 			pointer-events: none;
 			font-size: 10px;
-		
 		}
 
 	form hr {
 	width: 100%;
 	margin: 20px auto;
-
 	}
 
 	#valider {
+		cursor: pointer;
 		width : 60%;
 		color : white;
-		background-color : rgba(145, 142, 142, 0.709);
+		background-color : #1D6154;
 	}
+		#valider.not-valid {
+			background-color : grey;
+			cursor: not-allowed;
+		}
 		
