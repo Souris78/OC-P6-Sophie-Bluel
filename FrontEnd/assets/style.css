@@ -326,6 +326,7 @@ dialog,
 	}
 		.modal-gallery img {
 			width: 100%;
+			
 		}
 		section figure {
 			position: relative;
@@ -333,13 +334,20 @@ dialog,
 			.fa-trash-alt:before, .fa-trash-can:before {
 				content: "\f2ed";
 				position: absolute;
-				background: black;
-				padding: 2px;
 				color: white;
+				background: black;
+				font-size: 14px;
+				padding: 7px;
 				border-radius: 20%;
-				right: 2px;
-				top: 4px;
-				font-size: 6px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 10%;
+				height: 8%;
+				right: 7%;
+				top: 4%;
+				
+				
 			}
 		
 	hr {
@@ -390,6 +398,9 @@ dialog form {
 			color: #0000003b;
 			font-size: 70px;
 		}
+			.fa-regular, .far{
+				padding-top: 10px;
+			}
 		.add-pic-box label[for="file"] {
 			cursor : pointer;
 			background: #00000024;
@@ -421,6 +432,7 @@ dialog form {
 			.labels,
 			.add-pic-box span {
 				font-size: 11px;
+				padding-bottom: 10px;
 			}
 
 	#title,

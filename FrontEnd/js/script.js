@@ -118,8 +118,8 @@ async function getCategories() {
 
 // Fonction qui filtre les travaux en fonction de l'id de la catégorie
 function filterWork(categoryId) {
-  // Tes figures vont avoir un attribut data-categoryid
-// Au lancement de cette fonction, tu sélectionnes toutes tes figures et tu display none
+  // figures vont avoir un attribut data-categoryid
+// Au lancement de cette fonction, je sélectionne toutes tes figures et je display none
    const figures = document.querySelectorAll(".gallery figure");
    figures.forEach((figure) => {
       if (categoryId == 0) {
@@ -128,7 +128,7 @@ function filterWork(categoryId) {
       figure.style.display = "none";
       }
     });
-   // Ensuite tu sélectionnes toutes les figures avec data-categoryid="la catégorie transmise"
+   // Je sélectionnes toutes les figures avec data-categoryid="la catégorie transmise"
     const figuresToShow = document.querySelectorAll(
     `figure[data-categoryid="${categoryId}"]`
     );
@@ -143,6 +143,7 @@ async function getWorks() {
     // Récupère et formatte dans un format qui peut être manipulé par JS
     const dataWorks = await reqWorks.json();
     
+    //j'affiche les travaux dans la galerie
       for (let i = 0; i < dataWorks.length; i++) {
           const figure = `<figure data-id="${dataWorks[i].id}" 
           data-categoryid="${dataWorks[i].categoryId}">
@@ -154,7 +155,7 @@ async function getWorks() {
           document.querySelector(".gallery").insertAdjacentHTML("beforeend", figure);
       }
 
-     //j'ajoute les figures dans la modale
+     //j'ajoute les travaux dans la modale
       for (let i = 0; i < dataWorks.length; i++) {
         const modalFigure = `<figure 
           data-id="${dataWorks[i].id}" 
@@ -170,53 +171,42 @@ async function getWorks() {
           .querySelector(".modal-gallery")
           .insertAdjacentHTML("beforeend", modalFigure);
       }
-      //Je supprime les photos quand clique sur corbeille dans la modale et sur la page d'accueil
+      //Je supprime les photos quand clique sur corbeille dans la modale
       const trashes = document.querySelectorAll('.fa-trash-can')
       trashes.forEach((trash) => {
-        trash.addEventListener("click" , (e) => {
+        trash.addEventListener("click" , async (e) => {
           const id = e.target.dataset.id
-        const figures = document.querySelectorAll(`[data-id= "${id}"]`)
+          const figures = document.querySelectorAll(`[data-id= "${id}"]`)
+            figures.forEach((figure) => {
+              figure.remove()
+            })
         
-          console.log(figures)
-          figures.forEach((figure) => {
-            figure.remove()
-            
-          })
-        })
-      })
       
       //Je supprime les photos du back
-      const deleteButtons = document.querySelectorAll('.fa-trash-can')
-        deleteButtons.forEach((deleteButton) => {
-          deleteButton.addEventListener("click" , async (e) => {
-         
-            const id = e.target.dataset.id
-          const figures = document.querySelectorAll(`[data-id= "${id}"]`)
-            
-          try {
-            const deleteWorks = await fetch(`http://localhost:5678/api/works/${id}`, {
-                  method:"DELETE",
-                  headers: {
-                    "Content-Type": "application/json",
-                     "authorization": `Bearer ${localStorage.getItem('token')}`
-                  }
-            })
-            if(!deleteWorks.ok) {
-              throw new Error ("Erreur lors de la suppression des travaux")
+
+            try {
+              const deleteWorks = await fetch(`http://localhost:5678/api/works/${id}`, {
+                    method:"DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "authorization": `Bearer ${localStorage.getItem('token')}`
+                    }
+              })
+              if(!deleteWorks.ok) {
+                throw new Error ("Erreur lors de la suppression des travaux")
+              }
+                figures.forEach((figure) => {
+                figure.remove()
+                })
+
+            }catch (error) {
+              console.error("Erreur lors de la suppression :" , error)
             }
 
-              figures.forEach((figure) => {
-              figure.remove()
-              })
-
-          }catch (error) {
-            console.error("Erreur lors de la suppression :" , error)
-          }
-
-        })
-
-        })
-      }
+      })
+         }) 
+    
+    }
 
 // Fonction pour ouvrir/fermer la modale
       const dialog = document.querySelector(".add-project");
@@ -237,18 +227,20 @@ async function getWorks() {
           dialog.close();
         });
     
-          // Ferme la modale quand on clique à l'extérieur et sur la flèche
+          // Ferme la modale quand on clique à l'extérieur et retour sur la première modale quand on clique sur la flèche
       
           window.addEventListener("click", (e) => {
-            if (e.target === dialog || e.target === closeLinkArrow) dialog.close()
-          }); 
+            if (e.target === dialog) dialog.close()
+         
+            if (e.target === closeLinkArrow) dialogOne.showModal()
+           })
 
-          //affichage image
-          const labelFile = document.querySelector(".add-pic-box label[for='file']")
-          const inputFile = document.getElementById("file")
-          const previewImage = document.querySelector(".add-pic-box img")
-          const iconeFile = document.querySelector(".add-pic-box i")
-          const textFile = document.querySelector(".add-pic-box span")
+  //affichage image
+  const labelFile = document.querySelector(".add-pic-box label[for='file']")
+  const inputFile = document.getElementById("file")
+  const previewImage = document.querySelector(".add-pic-box img")
+  const iconeFile = document.querySelector(".add-pic-box i")
+  const textFile = document.querySelector(".add-pic-box span")
             
           inputFile.addEventListener('change' , () => {
               const file = inputFile.files[0] //récup ce qu'il y'a dans le fichier
@@ -271,17 +263,19 @@ async function getWorks() {
           
           // récuperation liste catégories
           async function getModalCategories() {
-            // appel à l'API avec fetch
             const req = await fetch("http://localhost:5678/api/categories");
-            // récupère et formatte dans un format qui peut être manipulé par JS
             return await req.json();
           }
 
+          // affichage liste catégories dans la sélection
           async function showSelectedCategory() {
             
             const selectCategory = document.querySelector("select#category")
             const categories = await getModalCategories()
-            
+           
+            //vider les options pour éviter doublons
+            selectCategory.options.length = 0
+
               categories.forEach(category => {
                 const option = document.createElement("option")
                 option.value = category.id
@@ -295,10 +289,7 @@ async function getWorks() {
             const form = document.querySelector("form")
             const title = document.getElementById("title")
             const category = document.getElementById("category")
-            const submit = document.getElementById("valider")
-           
-            
-           
+          
             form.addEventListener("submit" , async (e) => {
               // Lors de l'envoi du formulaire, j'empêche l'envoi normal 
               e.preventDefault()
@@ -317,26 +308,30 @@ async function getWorks() {
                   if(!submitForm.ok) {
                       throw new Error ("Erreur lors de l'ajout des travaux")
                   }
-
+ 
                   const dataModal = await submitForm.json()
                   console.log("projet ajouté" , dataModal)
+                  
                   form.reset()
+                 
                   showSelectedCategory()
+                   
+                  //réinitialise l'affichage de l'image
+                  previewImage.src = "";
+                  previewImage.style.display = "none";
+                  iconeFile.style.display = "block";
+                  labelFile.style.display = "block";
+                  textFile.style.display = "block";
+
                   getWorks()
 
-                  }catch (error) {
-                      console.error("Erreur lors de l'ajout des travaux :" , error)
-                    
-                    let errorMessage = document.getElementById("error-message");
-                    if (!errorMessage) {
-                      errorMessage = document.createElement('p');
-                      errorMessage.id = "error-message";
-                      errorMessage.style.color = 'red';
-                      form.appendChild(errorMessage);
-                    }
-                    errorMessage.textContent = "Une erreur est survenue lors de l'ajout des travaux. Veuillez réessayer.";
-                  }
+              } catch (error) {
+                    console.error("Erreur lors de l'ajout des travaux :" , error)
+                }
             })
+
+      
+
             // fonction pour vérifier que les champs sont remplis
             function checkForm() {
               const submit = document.getElementById("valider") 
@@ -345,11 +340,11 @@ async function getWorks() {
                   
                   submit.disabled = false
                   submit.classList.remove("not-valid")
-                  
-                  } else {
-                          submit.classList.add("not-valid")
-                          submit.disabled = true
-                    }
+
+                } else {
+                        submit.classList.add("not-valid")
+                        submit.disabled = true
+                  }
               })
 
             }
